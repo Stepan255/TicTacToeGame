@@ -77,21 +77,58 @@ public class GameBoard {
     }
 
     public boolean winCheck(int sizeLineToWin) {
-        return lineCheck(sizeLineToWin) || diagonalCheck(sizeLineToWin);
+        return lineCheck(sizeLineToWin) || diagonalCheckWin(sizeLineToWin);
     }
 
-    private boolean diagonalCheck(int sizeLineToWin) {
-        for (int i = 1; i <= sizeX; i++) {
+    private boolean diagonalCheckWin(int sizeLineToWin) {
+        for (int j = sizeY; j >= 1; j--) {
+            int i = 1;
+            if (mainDiagonalParallelCheck(i, j, sizeLineToWin) || secondaryDiagonalParallelCheck(i, j , sizeLineToWin)) {
+                return true;
+            }
+        }
 
+        for (int i = 1; i <= sizeX; i++) {
+            int j = 1;
+            if (mainDiagonalParallelCheck(i, j, sizeLineToWin) || secondaryDiagonalParallelCheck(i, j , sizeLineToWin)) {
+                return true;
+            }
+        }
+
+        for (int j = 1; j <= sizeY; j++) {
+            int i = sizeX;
+            if (mainDiagonalParallelCheck(i, j, sizeLineToWin) || secondaryDiagonalParallelCheck(i, j , sizeLineToWin)) {
+                return true;
+            }
         }
         return false;
     }
 
-    private boolean mainDiagonalParallelCheck(int x, int y) {
+    private boolean mainDiagonalParallelCheck(int x, int y, int sizeLineToWin) {
+        int countWin = 0;
+        char previousChar = '*';
+        while (x <= sizeX && y <= sizeY){
+                char cell = getCell(x++, y++);
+                countWin = coincidencePreviousChar(countWin, previousChar, cell);
+                if (countWin >= sizeLineToWin) {
+                    return true;
+                }
+                previousChar = cell;
+            }
         return false;
     }
 
-    private boolean secondaryDiagonalParallelCheck(int x, int y) {
+    private boolean secondaryDiagonalParallelCheck(int x, int y, int sizeLineToWin) {
+        int countWin = 0;
+        char previousChar = '*';
+        while (x <= sizeX && y >= 1){
+                char cell = getCell(x--, y++);
+                countWin = coincidencePreviousChar(countWin, previousChar, cell);
+                if (countWin >= sizeLineToWin) {
+                    return true;
+                }
+                previousChar = cell;
+            }
         return false;
     }
 
