@@ -67,15 +67,6 @@ public class GameBoard {
         return gameBoard.toString();
     }
 
-    public boolean gameEnd(int sizeLineToWin) {
-
-
-//        Win or Loose
-
-
-        return true;
-    }
-
     public boolean drawCheck() {
         for (char c : board) {
             if (c == '*') {
@@ -146,18 +137,7 @@ public class GameBoard {
         } else {
             countWin = 0;
         }
-//        System.out.print(cell + " | ");
-//        System.out.println(previousChar);
         return countWin;
     }
 
-    //поле
-    //-|1|2|3|4|5|
-    //-+-+-+-+-+-|
-    //1|O|O|O|0|0|
-    //-+-+-+-+-+-|
-    //2|O|O|O|0|0|
-    //-+-+-+-+-+-|
-    //3|O|O|O|0|0|
-    //-----------|
 }

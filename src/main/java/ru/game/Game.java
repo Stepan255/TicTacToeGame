@@ -59,13 +59,22 @@ public class Game {
 
 
     private void playerMove() {
-        GUI inter = new GUI(new ConsoleScanner());
-        int[] cell;
-        do {
-            System.out.println(playerTurn.getName() + " is walking now");
-            cell = inter.getCell();
-        } while (!gameBoard.setCell(cell[0], cell[1], playerTurn.getSign()));
-        System.out.println();
+        if (!playerTurn.getName().equals("bot")) {
+            GUI inter = new GUI(new ConsoleScanner());
+            int[] cell;
+            do {
+                System.out.println(playerTurn.getName() + " is walking now");
+                cell = inter.getCell();
+            } while (!gameBoard.setCell(cell[0], cell[1], playerTurn.getSign()));
+            System.out.println();
+        } else {
+            int x;
+            int y;
+            do {
+                x = new Random().nextInt(gameBoard.getSizeX());
+                y = new Random().nextInt(gameBoard.getSizeY());
+            } while (!gameBoard.setCell(x, y, playerTurn.getSign()));
+        }
 
     }
 
