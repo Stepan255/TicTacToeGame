@@ -20,19 +20,21 @@ public class GameBoard {
     public boolean changeValueCell(int x, int y) {
         return false;
     }
-
+//TODO Обработать ошибку 404
     public char getCell(int x, int y) {
-        if (x * y > board.length && x * y > 0) {
+        int index = (y - 1) * sizeX + (x - 1);
+        if (index < 0 || index >= board.length) {
             return 404;
         }
-        return board[(y - 1) * sizeX + (x - 1)];
+        return board[index];
     }
 
     public boolean setCell(int x, int y, char ch) {
-        if (x * y > board.length || x * y <= 0) {
+        int index = (y - 1) * sizeX + (x - 1);
+        if (index < 0 || index >= board.length || board[index] != '*') {
             return false;
         }
-        board[(y - 1) * sizeX + (x - 1)] = ch;
+        board[index] = ch;
         return true;
 
     }
@@ -111,7 +113,6 @@ public class GameBoard {
             int countWin = 0;
             char previousChar = '*';
             for (int j = 1; j <= sizeY; j++) {
-                System.out.println(i+" | "+j);
                 char cell = getCell(i, j);
                 countWin = coincidencePreviousChar(countWin, previousChar, cell);
                 if (countWin >= sizeLineToWin) {
@@ -128,7 +129,6 @@ public class GameBoard {
             int countWin = 0;
             char previousChar = '*';
             for (int i = 1; i <= sizeX; i++) {
-                System.out.println(i+" | "+j);
                 char cell = getCell(i, j);
                 countWin = coincidencePreviousChar(countWin, previousChar, cell);
                 if (countWin >= sizeLineToWin) {

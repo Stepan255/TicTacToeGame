@@ -34,7 +34,7 @@ public class Game {
         if (playerTurn == null) {
             System.out.println("Ничья");
         }
-        System.out.println(playerTurn.name + "win!!!");
+        System.out.println(playerTurn.name + " win!!!");
     }
 
     private void changTurn() {
@@ -62,8 +62,10 @@ public class Game {
         GUI inter = new GUI(new ConsoleScanner());
         int[] cell;
         do {
+            System.out.println(playerTurn.getName() + " is walking now");
             cell = inter.getCell();
-        } while (gameBoard.setCell(cell[0], cell[1], playerTurn.getSign()));
+        } while (!gameBoard.setCell(cell[0], cell[1], playerTurn.getSign()));
+        System.out.println();
 
     }
 
