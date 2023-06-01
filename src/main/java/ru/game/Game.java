@@ -31,10 +31,11 @@ public class Game {
             }
             changTurn();
         }
-        if (playerTurn == null) {
+        if (playerTurn.getName() == null) {
             System.out.println("Ничья");
+        } else {
+            System.out.println(playerTurn.name + " win!!!");
         }
-        System.out.println(playerTurn.name + " win!!!");
     }
 
     private void changTurn() {
@@ -71,8 +72,8 @@ public class Game {
             int x;
             int y;
             do {
-                x = new Random().nextInt(gameBoard.getSizeX());
-                y = new Random().nextInt(gameBoard.getSizeY());
+                x = new Random().nextInt(gameBoard.getSizeX()) + 1;
+                y = new Random().nextInt(gameBoard.getSizeY()) + 1;
             } while (!gameBoard.setCell(x, y, playerTurn.getSign()));
         }
 
