@@ -17,14 +17,16 @@ public class GameBoard {
         Arrays.fill(board, '*');
     }
 
-    public boolean changeValueCell(int x, int y) {
-        return false;
+    public boolean checkCell(int x, int y) {
+        int index = (y - 1) * sizeX + (x - 1);
+        return index >= 0 && index < board.length;
     }
-//TODO Обработать ошибку 404
+
+    //TODO Обработать ошибку 404
     public char getCell(int x, int y) {
         int index = (y - 1) * sizeX + (x - 1);
         if (index < 0 || index >= board.length) {
-            return 404;
+            throw new RuntimeException();
         }
         return board[index];
     }
@@ -83,21 +85,21 @@ public class GameBoard {
     private boolean diagonalCheckWin(int sizeLineToWin) {
         for (int j = sizeY; j >= 1; j--) {
             int i = 1;
-            if (mainDiagonalParallelCheck(i, j, sizeLineToWin) || secondaryDiagonalParallelCheck(i, j , sizeLineToWin)) {
+            if (mainDiagonalParallelCheck(i, j, sizeLineToWin) || secondaryDiagonalParallelCheck(i, j, sizeLineToWin)) {
                 return true;
             }
         }
 
         for (int i = 1; i <= sizeX; i++) {
             int j = 1;
-            if (mainDiagonalParallelCheck(i, j, sizeLineToWin) || secondaryDiagonalParallelCheck(i, j , sizeLineToWin)) {
+            if (mainDiagonalParallelCheck(i, j, sizeLineToWin) || secondaryDiagonalParallelCheck(i, j, sizeLineToWin)) {
                 return true;
             }
         }
 
         for (int j = 1; j <= sizeY; j++) {
             int i = sizeX;
-            if (mainDiagonalParallelCheck(i, j, sizeLineToWin) || secondaryDiagonalParallelCheck(i, j , sizeLineToWin)) {
+            if (mainDiagonalParallelCheck(i, j, sizeLineToWin) || secondaryDiagonalParallelCheck(i, j, sizeLineToWin)) {
                 return true;
             }
         }
@@ -107,28 +109,32 @@ public class GameBoard {
     private boolean mainDiagonalParallelCheck(int x, int y, int sizeLineToWin) {
         int countWin = 0;
         char previousChar = '*';
-        while (x <= sizeX && y <= sizeY){
-                char cell = getCell(x++, y++);
-                countWin = coincidencePreviousChar(countWin, previousChar, cell);
-                if (countWin >= sizeLineToWin) {
-                    return true;
-                }
-                previousChar = cell;
+        while (x <= sizeX && y <= sizeY) {
+            char cell = getCell(x++, y++);
+            countWin = coincidencePreviousChar(countWin, previousChar, cell);
+            if (countWin >= sizeLineToWin) {
+                return true;
             }
+            previousChar = cell;
+        }
         return false;
     }
 
     private boolean secondaryDiagonalParallelCheck(int x, int y, int sizeLineToWin) {
         int countWin = 0;
         char previousChar = '*';
-        while (x <= sizeX && y >= 1){
+        while (x >= 1 && y <= sizeY) {
+            if (checkCell(x, y)) {
                 char cell = getCell(x--, y++);
                 countWin = coincidencePreviousChar(countWin, previousChar, cell);
                 if (countWin >= sizeLineToWin) {
                     return true;
                 }
                 previousChar = cell;
+            } else {
+                return false;
             }
+        }
         return false;
     }
 

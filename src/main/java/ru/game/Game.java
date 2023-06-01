@@ -31,6 +31,7 @@ public class Game {
             }
             changTurn();
         }
+        System.out.println(gameBoard);
         if (playerTurn.getName() == null) {
             System.out.println("Ничья");
         } else {
